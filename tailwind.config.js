@@ -9,6 +9,11 @@ module.exports = {
     "./**/*.html",
     "./**/*.md"
   ],
-  theme: { extend: {} },
+  theme: { extend: {
+      maskImage: {
+        'gradient-to-r': 'linear-gradient(to right, black, transparent)',
+      },
+    }
+  },
   plugins: [],
 }
