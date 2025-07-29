@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en"  class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <title>{{ .Title }}</title>
+  {{ $styles := resources.Get "css/main.css" | css.TailwindCSS | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
+</head>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const images = document.querySelectorAll('.fade-in-on-scroll')
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.remove('opacity-0', 'translate-x-10', '-translate-x-10')
+                    entry.target.classList.add('opacity-100', 'translate-x-0')
+                    observer.unobserve(entry.target) // Only animate once
+                }
+            })
+        }, { threshold: 0.1 })
+
+        images.forEach(img => {
+            observer.observe(img)
+        })
+    })
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggleBtn = document.getElementById('mobile-menu-toggle')
+        const closeBtn = document.getElementById('mobile-menu-close')
+        const mobileMenu = document.getElementById('mobile-menu')
+
+        toggleBtn?.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden')
+            void mobileMenu.offsetWidth
+            mobileMenu.classList.remove('translate-x-full')
+            mobileMenu.classList.add('translate-x-0')
+        })
+
+        closeBtn?.addEventListener('click', () => {
+            mobileMenu.classList.remove('translate-x-0')
+            void mobileMenu.offsetWidth
+            mobileMenu.classList.add('translate-x-full')
+
+            const onTransitionEnd = () => {
+                mobileMenu.classList.add('hidden')
+                mobileMenu.removeEventListener('transitionend', onTransitionEnd)
+            }
+
+            mobileMenu.addEventListener('transitionend', onTransitionEnd)
+        })
+
+        // Close on link click
+        const menuLinks = mobileMenu.querySelectorAll('a[href^="#"]')
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('translate-x-0')
+                void mobileMenu.offsetWidth
+                mobileMenu.classList.add('translate-x-full')
+
+                const onTransitionEnd = () => {
+                    mobileMenu.classList.add('hidden')
+                    mobileMenu.removeEventListener('transitionend', onTransitionEnd)
+                }
+
+                mobileMenu.addEventListener('transitionend', onTransitionEnd)
+            })
+        })
+    })
+</script>
+
+
+
+<body>
+{{ block "main" . }}{{ end }}
+</body>
+</html>
