@@ -1,6 +1,6 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://gpspake.github.io/spake-com/'
 languageCode = 'en-us'
-title = 'My New Hugo Site'
+title = 'Joe Spake'
 
 [build]
   [build.buildStats]

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <title>{{ .Title }}</title>
-  {{ $styles := resources.Get "css/main.css" | css.TailwindCSS | minify | fingerprint }}
+  {{ $styles := resources.Get "css/main.css" | resources.TailwindCSS | resources.Minify | resources.Fingerprint }}
   <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
 </head>
 <script>
