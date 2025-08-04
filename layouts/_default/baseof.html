@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <title>{{ .Title }}</title>
-  {{ $styles := resources.Get "css/main.css" | resources.TailwindCSS | resources.Minify | resources.Fingerprint }}
-  <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
+  {{ $css := resources.Get "css/main.css" | resources.TailwindCSS | resources.Minify | resources.Fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}">
 </head>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
